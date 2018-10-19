@@ -32,7 +32,23 @@ export default [
          
         ],
       },
-     
+      {
+        path: '/nodetube',
+        name: 'nodetube',
+        icon: 'dashboard',
+        routes: [
+          {
+            path: '/nodetube',
+            redirect: '/nodetube/grouplist'
+          },
+          {
+            path: '/nodetube/grouplist',
+            name: 'grouplist',
+            component: './NodeTube/GroupList',
+          },
+         
+        ],
+      },
       
       {
         component: '404',
