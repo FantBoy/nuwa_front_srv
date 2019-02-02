@@ -1,14 +1,11 @@
 import mockjs from 'mockjs';
 
 const titles = [
-  'Alipay',
-  'Angular',
-  'Ant Design',
-  'NuWa',
-  'Bootstrap',
-  'React',
-  'Vue',
-  'Webpack',
+  '外网group1',
+  '外网group2',
+  '测试环境group1',
+  '预发布环境group1',
+  '体验环境group1',
 ];
 const avatars = [
   'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png', // Alipay
@@ -41,11 +38,11 @@ const covers = [
   'https://gw.alipayobjects.com/zos/rmsportal/gLaIAoVWTtLbBWZNYEMg.png',
 ];
 const desc = [
-  '那是一种内在的东西， 他们到达不了，也无法触及的',
-  '希望是一个好东西，也许是最好的，好东西是不会消亡的',
-  '生命就像一盒巧克力，结果往往出人意料',
-  '城镇中有那么多的酒馆，她却偏偏走进了我的酒馆',
-  '那时候我只会想自己想要什么，从不想自己拥有什么',
+  '外网环境，分组1',
+  '外网环境，分组2',
+  '测试环境第1分组，用于开发和测试使用',
+  '预发布环境分组1，用于版本发布前的预发布环境验证，类外网环境的环境，灰度发布的第一步',
+  '体验环境，和外网环境一模一样，但是使用不同的数据存储，用于特性体验',
 ];
 
 const user = [
@@ -68,11 +65,11 @@ function fakeList(count) {
       id: `fake-list-${i}`,
       owner: user[i % 10],
       title: titles[i % 8],
-      avatar: avatars[i % 8],
+      avatar: avatars[2],
       cover: parseInt(i / 4, 10) % 2 === 0 ? covers[i % 4] : covers[3 - (i % 4)],
       status: ['active', 'exception', 'normal'][i % 3],
       percent: Math.ceil(Math.random() * 50) + 50,
-      logo: avatars[i % 8],
+      logo: avatars[2],
       href: 'https://ant.design',
       updatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
