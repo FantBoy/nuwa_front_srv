@@ -103,13 +103,20 @@ class GroupList extends PureComponent {
         if (key === 'edit') this.showEditModal(currentItem);
         else if (key === 'delete') {
           Modal.confirm({
-            title: '删除任务',
-            content: '确定删除该任务吗？',
+            title: '删除分组',
+            content: '确定删除该分组吗？',
             okText: '确认',
             cancelText: '取消',
             onOk: () => this.deleteItem(currentItem.id),
           });
         }
+    };
+    deleteItem = id => {
+      const { dispatch } = this.props;
+      dispatch({
+        type: 'list/submit',
+        payload: { id },
+      });
     };
     render() {
         const {
@@ -138,7 +145,7 @@ class GroupList extends PureComponent {
                 <RadioButton value="progress">进行中</RadioButton>
                 <RadioButton value="waiting">等待中</RadioButton>
               </RadioGroup> */}
-              <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})} />
+              {/* <Search className={styles.extraContentSearch} placeholder="请输入" onSearch={() => ({})} /> */}
             </div>
         );
         const paginationProps = {
@@ -155,7 +162,7 @@ class GroupList extends PureComponent {
                 <p>{owner}</p>
               </div>
               <div className={styles.listContentItem}>
-                <span>开始时间</span>
+                <span>创建时间</span>
                 <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
               </div>
               {/* <div className={styles.listContentItem}>
@@ -200,15 +207,15 @@ class GroupList extends PureComponent {
             }
             return (
               <Form onSubmit={this.handleSubmit}>
-                <FormItem label="任务名称" {...this.formLayout}>
+                <FormItem label="分组名称" {...this.formLayout}>
                   {getFieldDecorator('title', {
-                    rules: [{ required: true, message: '请输入任务名称' }],
+                    rules: [{ required: true, message: '请输入分组名称' }],
                     initialValue: current.title,
                   })(<Input placeholder="请输入" />)}
                 </FormItem>
-                <FormItem label="开始时间" {...this.formLayout}>
+                <FormItem label="创建时间" {...this.formLayout}>
                   {getFieldDecorator('createdAt', {
-                    rules: [{ required: true, message: '请选择开始时间' }],
+                    rules: [{ required: true, message: '请选择创建时间' }],
                     initialValue: current.createdAt ? moment(current.createdAt) : null,
                   })(
                     <DatePicker
@@ -219,9 +226,9 @@ class GroupList extends PureComponent {
                     />
                   )}
                 </FormItem>
-                <FormItem label="任务负责人" {...this.formLayout}>
+                <FormItem label="分组负责人" {...this.formLayout}>
                   {getFieldDecorator('owner', {
-                    rules: [{ required: true, message: '请选择任务负责人' }],
+                    rules: [{ required: true, message: '请选择分组负责人' }],
                     initialValue: current.owner,
                   })(
                     <Select placeholder="请选择">
@@ -230,9 +237,9 @@ class GroupList extends PureComponent {
                     </Select>
                   )}
                 </FormItem>
-                <FormItem {...this.formLayout} label="产品描述">
+                <FormItem {...this.formLayout} label="分组描述">
                   {getFieldDecorator('subDescription', {
-                    rules: [{ message: '请输入至少五个字符的产品描述！', min: 5 }],
+                    rules: [{ message: '请输入至少五个字符的分组描述！', min: 5 }],
                     initialValue: current.subDescription,
                   })(<TextArea rows={4} placeholder="请输入至少五个字符" />)}
                 </FormItem>
@@ -242,7 +249,7 @@ class GroupList extends PureComponent {
         return (
             <PageHeaderWrapper>
                 <div className={styles.standardList}>
-                    <Card bordered={false}>
+                    {/* <Card bordered={false}>
                         <Row>
                             <Col sm={8} xs={24}>
                                 <Info title="我的待办" value="8个任务" bordered />
@@ -254,12 +261,12 @@ class GroupList extends PureComponent {
                                 <Info title="本周完成任务数" value="24个任务" />
                             </Col>
                         </Row>
-                    </Card>
+                    </Card> */}
         
                     <Card
                         className={styles.listCard}
                         bordered={false}
-                        title="标准列表"
+                        title="分组列表"
                         style={{ marginTop: 24 }}
                         bodyStyle={{ padding: '0 32px 40px 32px' }}
                         extra={extraContent}
@@ -324,7 +331,7 @@ class GroupList extends PureComponent {
                     </Card>
                 </div>
                 <Modal
-                    title={done ? null : `任务${current ? '编辑' : '添加'}`}
+                    title={done ? null : `分组${current ? '编辑' : '添加'}`}
                     className={styles.standardListForm}
                     width={640}
                     bodyStyle={done ? { padding: '72px 0' } : { padding: '28px 0 0' }}
