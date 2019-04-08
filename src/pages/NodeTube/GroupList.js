@@ -308,14 +308,14 @@ class GroupList extends PureComponent {
                                         >
                                         删除
                                         </a>,
-                                        <a
-                                            onClick={e => {
-                                                e.preventDefault();
-                                                this.editAndDelete(item);
-                                            }}
-                                        >
-                                        详情
-                                        </a>,
+                                        // <a
+                                        //     onClick={e => {
+                                        //         e.preventDefault();
+                                        //         this.editAndDelete(item);
+                                        //     }}
+                                        // >
+                                        // 详情
+                                        // </a>,
                                         // <MoreBtn current={item} />,
                                     ]}
                                 >

@@ -8,6 +8,7 @@ import {
   Form,
   Input,
   Select,
+  Tag,
   Icon,
   Button,
   Dropdown,
@@ -74,6 +75,7 @@ class UpdateForm extends PureComponent {
         name: props.values.name,
         ip: props.values.ip,
         desc: props.values.desc,
+        ownergroup: props.values.ownergroup,
         key: props.values.key,
         status: props.values.status.toString(),
         owner: props.values.owner,
@@ -139,16 +141,16 @@ class UpdateForm extends PureComponent {
         </FormItem>,
         
 
-        // <FormItem key="target" {...this.formLayout} label="监控对象">
-        //   {form.getFieldDecorator('target', {
-        //     initialValue: formVals.target,
-        //   })(
-        //     <Select style={{ width: '100%' }}>
-        //       <Option value="0">表一</Option>
-        //       <Option value="1">表二</Option>
-        //     </Select>
-        //   )}
-        // </FormItem>,
+        <FormItem key="ownergroup" {...this.formLayout} label="所属分组">
+          {form.getFieldDecorator('ownergroup', {
+              initialValue: formVals.ownergroup,
+          })(
+            <Select style={{ width: '100%' }}>
+              <Option value="0">表一</Option>
+              <Option value="1">表二</Option>
+            </Select>
+          )}
+        </FormItem>,
         
         <FormItem key="status" {...this.formLayout} label="设备状态">
           {form.getFieldDecorator('status', {
@@ -273,6 +275,21 @@ class NodeList extends PureComponent {
             dataIndex: 'ip',
         },
         {
+          title: '所属分组',
+          dataIndex: 'ownergroup',
+          filters: [
+            {
+              text: 'group_0',
+              value: 0,
+            },
+            {
+              text: 'group_1',
+              value: 1,
+            },
+            
+          ],
+      },
+        {
             title: '描述',
             dataIndex: 'desc',
         },
@@ -296,14 +313,15 @@ class NodeList extends PureComponent {
             render(val) {
                 return <Badge status={statusMap[val]} text={status[val]} />;
             },
+            
         },
         {
             title: '操作',
             render: (text, record) => (
               <Fragment>
                 <a onClick={() => this.handleUpdateModalVisible(true, record)}>编辑</a>
-                {/* <Divider type="vertical" />
-                <a href="">订阅警报</a> */}
+                <Divider type="vertical" />
+                <a href="">包部署详情</a>
               </Fragment>
             ),
           },

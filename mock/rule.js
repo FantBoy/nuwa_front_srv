@@ -9,6 +9,7 @@ for (let i = 0; i < 46; i += 1) {
     ip: `192.168.0.${i}`,
     name: `设备名称名称 ${i}`,
     owner: '曲丽丽',
+    ownergroup: `group_ ${i}`,
     desc: '这是一段描述',
     status: Math.floor(Math.random() * 10) % 3,
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
