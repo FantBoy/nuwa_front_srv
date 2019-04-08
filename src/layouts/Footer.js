@@ -9,7 +9,7 @@ const FooterView = () => (
       links={[
         {
           key: 'NuWa 首页',
-          title: 'Pro 首页',
+          title: 'NuWa 首页',
           href: 'https://',
           blankTarget: true,
         },
