@@ -39,7 +39,7 @@ export default [
         routes: [
           {
             path: '/nodetube',
-            redirect: '/nodetube/grouplist'
+            redirect: './NodeTube/GroupList'
           },
           {
             path: '/nodetube/grouplist',
@@ -53,7 +53,23 @@ export default [
           },
         ],
       },
-      
+      {
+        path: '/packagetube',
+        name: 'packagetube',
+        icon: 'dashboard',
+        routes: [
+          {
+            path: '/packagetube',
+            redirect: './PkgTube/PackageList'
+          },
+          {
+            path: '/packagetube/packagelist',
+            name: 'packagelist',
+            component: './PkgTube/PackageList',
+          },
+         
+        ],
+      },
       {
         component: '404',
       },

@@ -43,6 +43,10 @@ export async function updateRule(params) {
   });
 }
 
+export async function queryPackage(params) {
+  return request(`/api/packages?${stringify(params)}`);
+}
+
 export async function fakeSubmitForm(params) {
   return request('/api/forms', {
     method: 'POST',
