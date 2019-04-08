@@ -87,10 +87,10 @@ function postRule(req, res, u, b) {
       tableListDataSource.unshift({
         key: i,
         ip: `TradeCode ${i}`,
-        name: `一个任务名称 ${i}`,
+        name,
         owner: '曲丽丽',
-        desc,
-        status: Math.floor(Math.random() * 10) % 2,
+        desc: '',
+        status: 0,
         updatedAt: new Date(),
         createdAt: new Date(),
       });

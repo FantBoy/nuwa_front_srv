@@ -38,7 +38,31 @@ const getValue = obj =>
 const statusMap = ['default', 'success', 'error'];
 const status = ['已下线', '已上线', '异常'];
 
-
+const CreateForm = Form.create()(props => {
+  const { modalVisible, form, handleAdd, handleModalVisible } = props;
+  const okHandle = () => {
+    form.validateFields((err, fieldsValue) => {
+      if (err) return;
+      form.resetFields();
+      handleAdd(fieldsValue);
+    });
+  };
+  return (
+    <Modal
+      destroyOnClose
+      title="新建设备"
+      visible={modalVisible}
+      onOk={okHandle}
+      onCancel={() => handleModalVisible()}
+    >
+      <FormItem labelCol={{ span: 5 }} wrapperCol={{ span: 15 }} label="设备名称">
+        {form.getFieldDecorator('name', {
+          rules: [{ required: true, message: '请输入至少五个字符的规则描述！', min: 5 }],
+        })(<Input placeholder="请输入" />)}
+      </FormItem>
+    </Modal>
+  );
+});
 
 @Form.create()
 class UpdateForm extends PureComponent {
@@ -309,6 +333,18 @@ class NodeList extends PureComponent {
           selectedRows: rows,
         });
     };
+    handleAdd = fields => {
+      const { dispatch } = this.props;
+      dispatch({
+        type: 'rule/add',
+        payload: {
+          name: fields.name,
+        },
+      });
+  
+      message.success('添加成功');
+      this.handleModalVisible();
+    };
     handleUpdate = fields => {
       const { dispatch } = this.props;
       dispatch({
@@ -359,6 +395,10 @@ class NodeList extends PureComponent {
         } = this.props;
         const { selectedRows, modalVisible, updateModalVisible, stepFormValues } = this.state;
 
+        const parentMethods = {
+          handleAdd: this.handleAdd,
+          handleModalVisible: this.handleModalVisible,
+        };
         const updateMethods = {
           handleUpdateModalVisible: this.handleUpdateModalVisible,
           handleUpdate: this.handleUpdate,
@@ -368,17 +408,24 @@ class NodeList extends PureComponent {
           <PageHeaderWrapper title="">
             <Card bordered={false}>
               <div className={styles.tableList}>
-                <StandardTable
-                  selectedRows={selectedRows}
-                  loading={loading}
-                  data={data}
-                  columns={this.columns}
-                  onSelectRow={this.handleSelectRows}
-                  onChange={this.handleStandardTableChange}
-                />
+                <div className={styles.tableListOperator}>
+                  <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+                    新建
+                  </Button>
+                </div>
+                <div className={styles.tableList}>
+                  <StandardTable
+                    selectedRows={selectedRows}
+                    loading={loading}
+                    data={data}
+                    columns={this.columns}
+                    onSelectRow={this.handleSelectRows}
+                    onChange={this.handleStandardTableChange}
+                  />
+                </div>
               </div>
             </Card>
-
+            <CreateForm {...parentMethods} modalVisible={modalVisible} />
             {stepFormValues && Object.keys(stepFormValues).length ? (
               <UpdateForm
                 {...updateMethods}
