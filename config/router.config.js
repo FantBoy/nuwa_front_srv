@@ -46,7 +46,11 @@ export default [
             name: 'grouplist',
             component: './NodeTube/GroupList',
           },
-         
+          {
+            path: '/nodetube/nodelist',
+            name: 'nodelist',
+            component: './NodeTube/NodeList',
+          },
         ],
       },
       

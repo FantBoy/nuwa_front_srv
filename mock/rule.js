@@ -6,20 +6,13 @@ for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     key: i,
     disabled: i % 6 === 0,
-    href: 'https://ant.design',
-    avatar: [
-      'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-      'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-    ][i % 2],
-    name: `TradeCode ${i}`,
-    title: `一个任务名称 ${i}`,
+    ip: `192.168.0.${i}`,
+    name: `设备名称名称 ${i}`,
     owner: '曲丽丽',
     desc: '这是一段描述',
-    callNo: Math.floor(Math.random() * 1000),
-    status: Math.floor(Math.random() * 10) % 4,
+    status: Math.floor(Math.random() * 10) % 3,
     updatedAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
     createdAt: new Date(`2017-07-${Math.floor(i / 2) + 1}`),
-    progress: Math.ceil(Math.random() * 100),
   });
 }
 
@@ -82,7 +75,7 @@ function postRule(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, name, desc, key } = body;
+  const { method, name, desc, key, ip, status, owner } = body;
 
   switch (method) {
     /* eslint no-case-declarations:0 */
@@ -93,26 +86,19 @@ function postRule(req, res, u, b) {
       const i = Math.ceil(Math.random() * 10000);
       tableListDataSource.unshift({
         key: i,
-        href: 'https://ant.design',
-        avatar: [
-          'https://gw.alipayobjects.com/zos/rmsportal/eeHMaZBwmTvLdIwMfBpg.png',
-          'https://gw.alipayobjects.com/zos/rmsportal/udxAbMEhpwthVVcjLXik.png',
-        ][i % 2],
-        name: `TradeCode ${i}`,
-        title: `一个任务名称 ${i}`,
+        ip: `TradeCode ${i}`,
+        name: `一个任务名称 ${i}`,
         owner: '曲丽丽',
         desc,
-        callNo: Math.floor(Math.random() * 1000),
         status: Math.floor(Math.random() * 10) % 2,
         updatedAt: new Date(),
         createdAt: new Date(),
-        progress: Math.ceil(Math.random() * 100),
       });
       break;
     case 'update':
       tableListDataSource = tableListDataSource.map(item => {
         if (item.key === key) {
-          Object.assign(item, { desc, name });
+          Object.assign(item, { desc, name, ip, status, owner });
           return item;
         }
         return item;
