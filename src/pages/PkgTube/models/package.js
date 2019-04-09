@@ -1,11 +1,11 @@
-import { queryPackage, delPackage } from '@/services/api';
+import { queryPackage, delPackage, addPackage } from '@/services/api';
 
 export default {
   namespace: 'pkg',
 
   state: {
     data: {
-      list: [],
+      pkg: [],
       pagination: {},
     },
   },
@@ -20,6 +20,14 @@ export default {
     },
     *del({ payload, callback }, { call, put }) {
       const response = yield call(delPackage, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+      if (callback) callback();
+    },
+    *add({ payload, callback }, { call, put }) {
+      const response = yield call(addPackage, payload);
       yield put({
         type: 'save',
         payload: response,

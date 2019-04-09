@@ -203,6 +203,10 @@ class PackageList extends PureComponent {
           type: 'pkg/add',
           payload: {
             name: fields.name,
+            type: fields.type,
+            owner: fields.owner,
+            creattime: fields.creattime,
+            desc: fields.desc
           },
         });
     

@@ -47,11 +47,23 @@ function postPackages(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, name } = body;
+  const { method, name, type, owner, desc, creattime } = body;
   switch (method) {
     /* eslint no-case-declarations:0 */
     case 'delete':
       tableListDataSource = tableListDataSource.filter(item => name.indexOf(item.name) === -1);
+      break;
+    case 'add':
+      const i = Math.ceil(Math.random() * 10000);
+      tableListDataSource.unshift({
+        key: i,
+        name,
+        type,
+        owner,
+        desc,
+        creattime,
+    
+      });
       break;
     default:
       break;
