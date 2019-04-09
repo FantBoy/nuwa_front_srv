@@ -1,11 +1,13 @@
 import { parse } from 'url';
 import moment from 'moment';
 // mock tableListDataSource
+let pkgtype = ['服务版本包', '脚本包']
 let tableListDataSource = [];
 for (let i = 0; i < 28; i += 1) {
   tableListDataSource.push({
     key: i,
     name: `包名.${i}`,
+    type: pkgtype[Math.floor(Math.random() * 2)],
     owner: `创建者名称 ${i}`,
     desc: '这是一段描述',
     creattime:  moment(new Date(`2017-07-${i + 1}`)).format('YYYY-MM-DD'),

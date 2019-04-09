@@ -36,6 +36,69 @@ const getValue = obj =>
     .map(key => obj[key])
     .join(',');
 
+const CreateForm = Form.create()(props => {
+    const { 
+        modalVisible, 
+        form, 
+        handleAdd, 
+        handleModalVisible 
+    } = props;
+    const okHandle = () => {
+        form.validateFields((err, fieldsValue) => {
+            if (err) return;
+            form.resetFields();
+            handleAdd(fieldsValue);
+        });
+    };
+    const formLayout = {
+        labelCol: { span: 7 },
+        wrapperCol: { span: 13 },
+    };
+    return (
+        <Modal
+            destroyOnClose
+            title="新建版本包"
+            visible={modalVisible}
+            onOk={okHandle}
+            onCancel={() => handleModalVisible()}
+            >
+            <FormItem {...formLayout} label="包名称">
+                {form.getFieldDecorator('name', {
+                rules: [{ required: true, message: '请输入至少五个字符的包名称！', min: 5 }],
+                })(<Input placeholder="请输入" />)}
+            </FormItem>
+            <FormItem {...formLayout} label="包属性">
+                {form.getFieldDecorator('type', {
+                rules: [{ required: true, message: '请输入至少五个字符的包属性！', min: 5 }],
+                })(<Input placeholder="请输入" />)}
+            </FormItem>
+            <FormItem {...formLayout} label="包归属">
+                {form.getFieldDecorator('owner', {
+                rules: [{ required: true, message: '请输入至少五个字符的包归属！', min: 5 }],
+                })(<Input placeholder="请输入" />)}
+            </FormItem>
+            <FormItem {...formLayout} label="创建时间" >
+                {form.getFieldDecorator('createtime', {
+                rules: [{ required: true, message: '请选择创建时间' }],
+                
+                })(
+                <DatePicker
+                    showTime
+                    placeholder="请选择"
+                    format="YYYY-MM-DD HH:mm:ss"
+                    style={{ width: '100%' }}
+                />
+                )}
+            </FormItem>
+            <FormItem {...formLayout} label="包简介">
+                {form.getFieldDecorator('desc', {
+                rules: [{ message: '请输入至少五个字符的包简介！', min: 5 }],
+                
+                })(<TextArea rows={4} placeholder="请输入至少五个字符" />)}
+            </FormItem>
+        </Modal>
+    );
+    });
 
 /* eslint react/no-multi-comp:0 */
 @connect(({ pkg, loading }) => ({
@@ -46,12 +109,27 @@ const getValue = obj =>
 class PackageList extends PureComponent {
     state = {
         selectedRows: [],
-
+        modalVisible: false,
     };
     columns = [
         {
             title: '包名称',
             dataIndex: 'name',
+        },
+        {
+            title: '包属性',
+            dataIndex: 'type',
+            filters: [
+                {
+                  text: '服务版本包',
+                  value: 0,
+                },
+                {
+                  text: '脚本包',
+                  value: 1,
+                },
+                
+              ],
         },
         {
             title: '创建者',
@@ -62,7 +140,7 @@ class PackageList extends PureComponent {
             dataIndex: 'creattime',
         },
         {
-            title: '描述',
+            title: '包简介',
             dataIndex: 'desc',
         },
         {
@@ -91,7 +169,24 @@ class PackageList extends PureComponent {
           selectedRows: rows,
         });
     };
+    handleModalVisible = flag => {
+        this.setState({
+          modalVisible: !!flag,
+        });
+    };
+
+    handleAdd = fields => {
+        const { dispatch } = this.props;
+        dispatch({
+          type: 'pkg/add',
+          payload: {
+            name: fields.name,
+          },
+        });
     
+        message.success('添加成功');
+        this.handleModalVisible();
+      };
     
     render() {
         const {
@@ -99,23 +194,32 @@ class PackageList extends PureComponent {
             loading,
         } = this.props;
 
-        const { selectedRows } = this.state;
-
+        const { modalVisible, selectedRows } = this.state;
+        const parentMethods = {
+            handleAdd: this.handleAdd,
+            handleModalVisible: this.handleModalVisible,
+          };
         
         return (
             <PageHeaderWrapper title="">
                 <Card bordered={false}>
                     <div className={styles.tableList}>
-                    <StandardTable
-                        selectedRows={selectedRows}
-                        loading={loading}
-                        data={data}
-                        columns={this.columns}
-                        onSelectRow={this.handleSelectRows}
-                        
-                    />
+                        <div className={styles.tableListOperator}>
+                            <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+                                新建
+                            </Button>
+                        </div>
+                        <StandardTable
+                            selectedRows={selectedRows}
+                            loading={loading}
+                            data={data}
+                            columns={this.columns}
+                            onSelectRow={this.handleSelectRows}
+                            
+                        />
                     </div>
                 </Card>
+                <CreateForm {...parentMethods} modalVisible={modalVisible} />
             </PageHeaderWrapper>
         );
     }
