@@ -148,15 +148,16 @@ class PackageList extends PureComponent {
             width: '18%',
             render: (text, record) => (
                 <Fragment>
-                  <a onClick={() => this.handleUpdateModalVisible(true, record)}>编辑</a>
+                  <a onClick={() => this.handleDeletePackage(true, record)}>编辑</a>
                   <Divider type="vertical" />
-                  <a onClick={() => this.handleUpdateModalVisible(true, record)}>删除</a>
+                  <a onClick={() => this.handleDeletePackage(record)}>删除</a>
                   <Divider type="vertical" />
-                  <a onClick={() => this.handleUpdateModalVisible(true, record)}>版本列表</a>
+                  <a onClick={() => this.handleDeletePackage(true, record)}>版本列表</a>
                 </Fragment>
               ),
           },
     ];
+
 
     componentDidMount() {
         const { dispatch } = this.props;
@@ -174,6 +175,27 @@ class PackageList extends PureComponent {
           modalVisible: !!flag,
         });
     };
+    handleDeletePackage = item => {
+        Modal.confirm({
+            title: '删除版本包',
+            content: '确定要删除该版本包吗？',
+            okText: '确认',
+            cancelText: '取消',
+            onOk: () => this.deleteItem(item.name),
+        });
+    };
+    deleteItem = name => {
+        const { dispatch } = this.props;
+        dispatch({
+          type: 'pkg/del',
+          payload: {
+            name: name,
+          },
+        });
+    
+        message.success('删除成功');
+        this.handleModalVisible();
+    };
 
     handleAdd = fields => {
         const { dispatch } = this.props;
@@ -186,7 +208,7 @@ class PackageList extends PureComponent {
     
         message.success('添加成功');
         this.handleModalVisible();
-      };
+    };
     
     render() {
         const {

@@ -40,7 +40,35 @@ function getPackages(req, res, u) {
       return res.json(result);
 }
 
+function postPackages(req, res, u, b) {
+  let url = u;
+  if (!url || Object.prototype.toString.call(url) !== '[object String]') {
+    url = req.url; // eslint-disable-line
+  }
+
+  const body = (b && b.body) || req.body;
+  const { method, name } = body;
+  switch (method) {
+    /* eslint no-case-declarations:0 */
+    case 'delete':
+      tableListDataSource = tableListDataSource.filter(item => name.indexOf(item.name) === -1);
+      break;
+    default:
+      break;
+  }
+  const result = {
+    list: tableListDataSource,
+    pagination: {
+      total: tableListDataSource.length,
+      
+    },
+  };
+
+  return res.json(result);
+}
+
 export default {
     'GET /api/packages': getPackages,
+    'POST /api/packages': postPackages,
 };
   

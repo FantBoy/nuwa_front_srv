@@ -47,6 +47,16 @@ export async function queryPackage(params) {
   return request(`/api/packages?${stringify(params)}`);
 }
 
+export async function delPackage(params) {
+  return request('/api/packages', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'delete',
+    },
+  });
+}
+
 export async function fakeSubmitForm(params) {
   return request('/api/forms', {
     method: 'POST',

@@ -1,4 +1,4 @@
-import { queryPackage } from '@/services/api';
+import { queryPackage, delPackage } from '@/services/api';
 
 export default {
   namespace: 'pkg',
@@ -18,7 +18,14 @@ export default {
         payload: response,
       });
     },
-   
+    *del({ payload, callback }, { call, put }) {
+      const response = yield call(delPackage, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+      if (callback) callback();
+    },
   },
 
   reducers: {
