@@ -42,13 +42,21 @@ const CreateForm = Form.create()(props => {
         modalVisible, 
         form, 
         handleAdd, 
-        handleModalVisible 
+        handleModalVisible,
+        handleUpdate,
+        values
     } = props;
     const okHandle = () => {
         form.validateFields((err, fieldsValue) => {
             if (err) return;
             form.resetFields();
-            handleAdd(fieldsValue);
+            console.log(fieldsValue);
+            if (JSON.stringify(values) == "{}"){
+                handleAdd(fieldsValue);
+            }
+            else{
+                handleUpdate(values.key, fieldsValue);
+            }
         });
     };
     const formLayout = {
@@ -61,27 +69,30 @@ const CreateForm = Form.create()(props => {
             title="新建版本包"
             visible={modalVisible}
             onOk={okHandle}
-            onCancel={() => handleModalVisible()}
+            onCancel={() => handleModalVisible(values)}
             >
             <FormItem {...formLayout} label="包名称">
                 {form.getFieldDecorator('name', {
-                rules: [{ required: true, message: '请输入至少五个字符的包名称！', min: 5 }],
+                rules: [{ required: true, message: '请输入至少三个字符的包名称！', min: 3 }],
+                initialValue: values.name,
                 })(<Input placeholder="请输入" />)}
             </FormItem>
             <FormItem {...formLayout} label="包属性">
                 {form.getFieldDecorator('type', {
-                rules: [{ required: true, message: '请输入至少五个字符的包属性！', min: 5 }],
+                rules: [{ required: true, message: '请输入至少三个字符的包属性！', min: 3 }],
+                initialValue: values.type,
                 })(<Input placeholder="请输入" />)}
             </FormItem>
             <FormItem {...formLayout} label="包归属">
                 {form.getFieldDecorator('owner', {
-                rules: [{ required: true, message: '请输入至少五个字符的包归属！', min: 5 }],
+                rules: [{ required: true, message: '请输入至少三个字符的包归属！', min: 3 }],
+                initialValue: values.owner,
                 })(<Input placeholder="请输入" />)}
             </FormItem>
             <FormItem {...formLayout} label="创建时间" >
                 {form.getFieldDecorator('createtime', {
                 rules: [{ required: true, message: '请选择创建时间' }],
-                
+                initialValue: values.createtime ? moment(values.createtime) : null,
                 })(
                 <DatePicker
                     showTime
@@ -94,7 +105,7 @@ const CreateForm = Form.create()(props => {
             <FormItem {...formLayout} label="包简介">
                 {form.getFieldDecorator('desc', {
                 rules: [{ message: '请输入至少五个字符的包简介！', min: 5 }],
-                
+                initialValue: values.desc,
                 })(<TextArea rows={4} placeholder="请输入至少五个字符" />)}
             </FormItem>
         </Modal>
@@ -111,6 +122,7 @@ class PackageList extends PureComponent {
     state = {
         selectedRows: [],
         modalVisible: false,
+        editItemData: {},
     };
     columns = [
         {
@@ -149,7 +161,7 @@ class PackageList extends PureComponent {
         },
         {
             title: '创建时间',
-            dataIndex: 'creattime',
+            dataIndex: 'createtime',
         },
         {
             title: '包简介',
@@ -160,7 +172,7 @@ class PackageList extends PureComponent {
             width: '18%',
             render: (text, record) => (
                 <Fragment>
-                  <a onClick={() => this.handleDeletePackage(true, record)}>编辑</a>
+                  <a onClick={() => this.handleUpdateModalVisible(true, record)}>编辑</a>
                   <Divider type="vertical" />
                   <a onClick={() => this.handleDeletePackage(record)}>删除</a>
                   <Divider type="vertical" />
@@ -182,10 +194,13 @@ class PackageList extends PureComponent {
           selectedRows: rows,
         });
     };
-    handleModalVisible = flag => {
-        this.setState({
-          modalVisible: !!flag,
-        });
+    handleModalVisible = values => {
+        if ({} == values){
+            this.handleEditModalVisible();
+        }
+        else{
+            this.handleUpdateModalVisible();
+        }
     };
     handleDeletePackage = item => {
         Modal.confirm({
@@ -194,6 +209,18 @@ class PackageList extends PureComponent {
             okText: '确认',
             cancelText: '取消',
             onOk: () => this.deleteItem(item.name),
+        });
+    };
+    handleEditModalVisible = flag => {
+        this.setState({
+            modalVisible: !!flag,
+          });
+    };
+
+    handleUpdateModalVisible = (flag, record) => {
+        this.setState({
+            modalVisible: !!flag,
+            editItemData: record || {},
         });
     };
     deleteItem = name => {
@@ -206,7 +233,7 @@ class PackageList extends PureComponent {
         });
     
         message.success('删除成功');
-        this.handleModalVisible();
+        this.handleEditModalVisible();
     };
 
     handleAdd = fields => {
@@ -217,13 +244,30 @@ class PackageList extends PureComponent {
             name: fields.name,
             type: fields.type,
             owner: fields.owner,
-            creattime: fields.creattime,
+            createtime: fields.createtime,
             desc: fields.desc
           },
         });
     
         message.success('添加成功');
-        this.handleModalVisible();
+        this.handleEditModalVisible();
+    };
+
+    handleUpdate = (key, fields) => {
+        const { dispatch } = this.props;
+        dispatch({
+          type: 'pkg/update',
+          payload: {
+            key: key,
+            name: fields.name,
+            type: fields.type,
+            owner: fields.owner,
+            createtime: fields.createtime,
+            desc: fields.desc
+          },
+        });
+        message.success('更新成功');
+        this.handleUpdateModalVisible();
     };
     
     render() {
@@ -232,18 +276,20 @@ class PackageList extends PureComponent {
             loading,
         } = this.props;
 
-        const { modalVisible, selectedRows } = this.state;
+        const { modalVisible, selectedRows, editItemData } = this.state;
+
         const parentMethods = {
             handleAdd: this.handleAdd,
             handleModalVisible: this.handleModalVisible,
-          };
+            handleUpdate: this.handleUpdate,
+        };
         
         return (
             <PageHeaderWrapper title="">
                 <Card bordered={false}>
                     <div className={styles.tableList}>
                         <div className={styles.tableListOperator}>
-                            <Button icon="plus" type="primary" onClick={() => this.handleModalVisible(true)}>
+                            <Button icon="plus" type="primary" onClick={() => this.handleEditModalVisible(true)}>
                                 新建
                             </Button>
                         </div>
@@ -257,7 +303,7 @@ class PackageList extends PureComponent {
                         />
                     </div>
                 </Card>
-                <CreateForm {...parentMethods} modalVisible={modalVisible} />
+                <CreateForm {...parentMethods} modalVisible={modalVisible} values={editItemData}/>
             </PageHeaderWrapper>
         );
     }

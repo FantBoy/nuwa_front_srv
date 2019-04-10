@@ -10,7 +10,7 @@ for (let i = 0; i < 28; i += 1) {
     type: pkgtype[Math.floor(Math.random() * 2)],
     owner: `创建者名称 ${i}`,
     desc: '这是一段描述',
-    creattime:  moment(new Date(`2017-07-${i + 1}`)).format('YYYY-MM-DD'),
+    createtime:  moment(new Date(`2017-07-${i + 1}`)).format('YYYY-MM-DD'),
 
   });
 }
@@ -47,7 +47,7 @@ function postPackages(req, res, u, b) {
   }
 
   const body = (b && b.body) || req.body;
-  const { method, name, type, owner, desc, creattime } = body;
+  const { method, key, name, type, owner, desc, createtime } = body;
   switch (method) {
     /* eslint no-case-declarations:0 */
     case 'delete':
@@ -61,8 +61,17 @@ function postPackages(req, res, u, b) {
         type,
         owner,
         desc,
-        creattime,
+        createtime,
     
+      });
+      break;
+    case 'update':
+      tableListDataSource = tableListDataSource.map(item => {
+        if (item.key === key) {
+          Object.assign(item, { desc, name, type, createtime, owner });
+          return item;
+        }
+        return item;
       });
       break;
     default:

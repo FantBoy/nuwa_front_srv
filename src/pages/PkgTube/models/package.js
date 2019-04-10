@@ -1,4 +1,4 @@
-import { queryPackage, delPackage, addPackage } from '@/services/api';
+import { queryPackage, delPackage, addPackage, updatePackage } from '@/services/api';
 
 export default {
   namespace: 'pkg',
@@ -28,6 +28,14 @@ export default {
     },
     *add({ payload, callback }, { call, put }) {
       const response = yield call(addPackage, payload);
+      yield put({
+        type: 'save',
+        payload: response,
+      });
+      if (callback) callback();
+    },
+    *update({ payload, callback }, { call, put }) {
+      const response = yield call(updatePackage, payload);
       yield put({
         type: 'save',
         payload: response,

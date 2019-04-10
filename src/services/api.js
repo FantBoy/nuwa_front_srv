@@ -66,6 +66,15 @@ export async function addPackage(params) {
     },
   });
 }
+export async function updatePackage(params) {
+  return request('/api/packages', {
+    method: 'POST',
+    body: {
+      ...params,
+      method: 'update',
+    },
+  });
+}
 
 export async function fakeSubmitForm(params) {
   return request('/api/forms', {
