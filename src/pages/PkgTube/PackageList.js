@@ -50,7 +50,7 @@ const CreateForm = Form.create()(props => {
         form.validateFields((err, fieldsValue) => {
             if (err) return;
             form.resetFields();
-            console.log(fieldsValue);
+            
             if (JSON.stringify(values) == "{}"){
                 handleAdd(fieldsValue);
             }
@@ -162,6 +162,9 @@ class PackageList extends PureComponent {
         {
             title: '创建时间',
             dataIndex: 'createtime',
+            render(val){
+                return moment(val).format('YYYY-MM-DD HH:mm:ss');
+            },
         },
         {
             title: '包简介',

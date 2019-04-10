@@ -10,10 +10,10 @@ for (let i = 0; i < 28; i += 1) {
     type: pkgtype[Math.floor(Math.random() * 2)],
     owner: `创建者名称 ${i}`,
     desc: '这是一段描述',
-    createtime:  moment(new Date(`2017-07-${i + 1}`)).format('YYYY-MM-DD'),
+    createtime:  moment(new Date(`2017-07-${i + 1}`)).format('YYYY-MM-DD HH:mm:ss'),
 
   });
-}
+} 
 
 function getPackages(req, res, u) {
     let url = u;
