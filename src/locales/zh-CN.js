@@ -78,6 +78,7 @@ export default {
   'menu.nodetube.nodelist': '设备列表',
   'menu.packagetube': "版本包管理",
   'menu.packagetube.packagelist': "版本包列表",
+  'menu.packagetube.packageversionlist': "包版本列表",
   'menu.account.logout': '退出登录',
   'app.login.message-invalid-credentials': '账户或密码错误（admin/888888）',
   'app.login.message-invalid-verification-code': '验证码错误',

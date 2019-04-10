@@ -67,7 +67,12 @@ export default [
             name: 'packagelist',
             component: './PkgTube/PackageList',
           },
-         
+          {
+            path: '/packagetube/packageversionlist',
+            name: 'packageversionlist',
+            hideInMenu: true,
+            component: './PkgTube/PackageVersionList',
+          },
         ],
       },
       {
