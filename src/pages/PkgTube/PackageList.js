@@ -9,6 +9,7 @@ import {
   Input,
   Select,
   Icon,
+  Tag,
   Button,
   Dropdown,
   Menu,
@@ -129,7 +130,18 @@ class PackageList extends PureComponent {
                   value: 1,
                 },
                 
-              ],
+            ],
+            render(val) {
+                if("脚本包" == val)
+                {
+                    return <Tag color="blue">{val}</Tag>;
+                }
+                else
+                {
+                    return <Tag color="purple">{val}</Tag>;
+                }
+                
+            },
         },
         {
             title: '创建者',
