@@ -24,6 +24,17 @@ function getPackages(req, res, u) {
     const params = parse(url, true).query;
     let dataSource = tableListDataSource;
 
+    if (params.type) {
+      const types = params.type.split(',');
+      let filterDataSource = [];
+      types.forEach(s => {
+        filterDataSource = filterDataSource.concat(
+          dataSource.filter(data => data.type === pkgtype[parseInt(s[0], 10)])
+        );
+      });
+      dataSource = filterDataSource;
+    }
+
     let pageSize = 10;
     if (params.pageSize) {
         pageSize = params.pageSize * 1;

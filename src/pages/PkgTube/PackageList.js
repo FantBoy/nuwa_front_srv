@@ -272,7 +272,30 @@ class PackageList extends PureComponent {
         message.success('更新成功');
         this.handleUpdateModalVisible();
     };
+
+    handleStandardTableChange = (pagination, filtersArg, sorter) => {
+        const { dispatch } = this.props;
     
+        const filters = Object.keys(filtersArg).reduce((obj, key) => {
+          const newObj = { ...obj };
+          newObj[key] = getValue(filtersArg[key]);
+          return newObj;
+        }, {});
+        
+        const params = {
+          currentPage: pagination.current,
+          pageSize: pagination.pageSize,
+          ...filters,
+        };
+        if (sorter.field) {
+          params.sorter = `${sorter.field}_${sorter.order}`;
+        }
+    
+        dispatch({
+          type: 'pkg/fetch',
+          payload: params,
+        });
+    };
     render() {
         const {
             pkg: { data },
@@ -302,7 +325,7 @@ class PackageList extends PureComponent {
                             data={data}
                             columns={this.columns}
                             onSelectRow={this.handleSelectRows}
-                            
+                            onChange={this.handleStandardTableChange}
                         />
                     </div>
                 </Card>
