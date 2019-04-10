@@ -1,4 +1,5 @@
 import React, { PureComponent, Fragment } from 'react';
+import { routerRedux } from 'dva/router';
 import { connect } from 'dva';
 import moment from 'moment';
 import {
@@ -8,7 +9,6 @@ import {
   Form,
   Input,
   Select,
-  Icon,
   Tag,
   Button,
   Dropdown,
@@ -179,7 +179,7 @@ class PackageList extends PureComponent {
                   <Divider type="vertical" />
                   <a onClick={() => this.handleDeletePackage(record)}>删除</a>
                   <Divider type="vertical" />
-                  <a onClick={() => this.handleDeletePackage(true, record)}>版本列表</a>
+                  <a onClick={() => this.handlePackageList(record)}>版本列表</a>
                 </Fragment>
               ),
           },
@@ -213,6 +213,12 @@ class PackageList extends PureComponent {
             cancelText: '取消',
             onOk: () => this.deleteItem(item.name),
         });
+    };
+    handlePackageList = item => {
+        this.props.dispatch(routerRedux.push({ 
+            pathname: '/packagetube/packageversionlist',
+            params: item.key
+        }))
     };
     handleEditModalVisible = flag => {
         this.setState({

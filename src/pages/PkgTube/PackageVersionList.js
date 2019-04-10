@@ -42,35 +42,17 @@ class PackageVersionList extends PureComponent {
     };
 
     columns = [
+       
         {
-            title: '包名称',
-            dataIndex: 'name',
+            title: '版本号',
+            dataIndex: 'version',
+            render(val) {
+                return <Tag color="green">{val}</Tag>
+            },
         },
         {
-            title: '包属性',
-            dataIndex: 'type',
-            filters: [
-                {
-                  text: '服务版本包',
-                  value: 0,
-                },
-                {
-                  text: '脚本包',
-                  value: 1,
-                },
-                
-            ],
-            render(val) {
-                if("脚本包" == val)
-                {
-                    return <Tag color="blue">{val}</Tag>;
-                }
-                else
-                {
-                    return <Tag color="purple">{val}</Tag>;
-                }
-                
-            },
+            title: '安装数',
+            dataIndex: 'installed_number',
         },
         {
             title: '创建者',
@@ -84,7 +66,7 @@ class PackageVersionList extends PureComponent {
             },
         },
         {
-            title: '包简介',
+            title: '版本简介',
             dataIndex: 'desc',
         },
         {
@@ -96,7 +78,7 @@ class PackageVersionList extends PureComponent {
                   <Divider type="vertical" />
                   <a onClick={() => this.handleDeletePackage(record)}>删除</a>
                   <Divider type="vertical" />
-                  <a onClick={() => this.handleDeletePackage(true, record)}>版本列表</a>
+                  <a onClick={() => this.handleDeletePackage(true, record)}>部署详情</a>
                 </Fragment>
               ),
           },
@@ -107,7 +89,7 @@ class PackageVersionList extends PureComponent {
             pkg: { data },
             loading,
         } = this.props;
-
+        console.log(this.props.location.params);
         const { modalVisible, selectedRows, editItemData } = this.state;
 
         const parentMethods = {
@@ -122,7 +104,7 @@ class PackageVersionList extends PureComponent {
                     <div className={styles.tableList}>
                         <div className={styles.tableListOperator}>
                             <Button icon="plus" type="primary" onClick={() => this.handleEditModalVisible(true)}>
-                                新建
+                                新建版本
                             </Button>
                         </div>
                         <StandardTable
