@@ -70,14 +70,14 @@ class PackageVersionList extends PureComponent {
     },
     {
       title: "操作",
-      width: "18%",
+      width: "20%",
       render: (text, record) => (
         <Fragment>
           <a onClick={() => this.handleUpdateModalVisible(true, record)}>
             版本详情
           </a>
-          <Divider type="vertical" />
-          <a onClick={() => this.handleDeletePackage(record)}>删除</a>
+          {/* <Divider type="vertical" />
+          <a onClick={() => this.handleDeletePackage(record)}>删除</a> */}
           <Divider type="vertical" />
           <a onClick={() => this.handleDeletePackage(true, record)}>部署详情</a>
         </Fragment>
