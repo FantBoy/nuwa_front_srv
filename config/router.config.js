@@ -1,83 +1,109 @@
 export default [
   // user
   {
-    path: '/user',
-    component: '../layouts/UserLayout',
+    path: "/user",
+    component: "../layouts/UserLayout",
     routes: [
-      { path: '/user', redirect: '/user/login' },
-      { path: '/user/login', component: './User/Login' },
-      { path: '/user/register', component: './User/Register' },
-      { path: '/user/register-result', component: './User/RegisterResult' },
-    ],
+      { path: "/user", redirect: "/user/login" },
+      { path: "/user/login", component: "./User/Login" },
+      { path: "/user/register", component: "./User/Register" },
+      { path: "/user/register-result", component: "./User/RegisterResult" }
+    ]
   },
   // app
   {
-    path: '/',
-    component: '../layouts/BasicLayout',
-    Routes: ['src/pages/Authorized'],
-    authority: ['admin', 'user'],
+    path: "/",
+    component: "../layouts/BasicLayout",
+    Routes: ["src/pages/Authorized"],
+    authority: ["admin", "user"],
     routes: [
       // dashboard
-      { path: '/', redirect: '/dashboard/analysis' },
+      { path: "/", redirect: "/dashboard/analysis" },
       {
-        path: '/dashboard',
-        name: 'dashboard',
-        icon: 'dashboard',
+        path: "/dashboard",
+        name: "dashboard",
+        icon: "dashboard",
         routes: [
           {
-            path: '/dashboard/analysis',
-            name: 'analysis',
-            component: './Dashboard/Analysis',
-          },
-         
-        ],
+            path: "/dashboard/analysis",
+            name: "analysis",
+            component: "./Dashboard/Analysis"
+          }
+        ]
       },
       {
-        path: '/nodetube',
-        name: 'nodetube',
-        icon: 'dashboard',
+        path: "/nodetube",
+        name: "nodetube",
+        icon: "dashboard",
         routes: [
           {
-            path: '/nodetube',
-            redirect: './NodeTube/GroupList'
+            path: "/nodetube",
+            redirect: "./NodeTube/GroupList"
           },
           {
-            path: '/nodetube/grouplist',
-            name: 'grouplist',
-            component: './NodeTube/GroupList',
+            path: "/nodetube/grouplist",
+            name: "grouplist",
+            component: "./NodeTube/GroupList"
           },
           {
-            path: '/nodetube/nodelist',
-            name: 'nodelist',
-            component: './NodeTube/NodeList',
-          },
-        ],
+            path: "/nodetube/nodelist",
+            name: "nodelist",
+            component: "./NodeTube/NodeList"
+          }
+        ]
       },
       {
-        path: '/packagetube',
-        name: 'packagetube',
-        icon: 'dashboard',
+        path: "/packagetube",
+        name: "packagetube",
+        icon: "dashboard",
         routes: [
           {
-            path: '/packagetube',
-            redirect: './PkgTube/PackageList'
+            path: "/packagetube",
+            redirect: "./PkgTube/PackageList"
           },
           {
-            path: '/packagetube/packagelist',
-            name: 'packagelist',
-            component: './PkgTube/PackageList',
+            path: "/packagetube/packagelist",
+            name: "packagelist",
+            component: "./PkgTube/PackageList"
           },
           {
-            path: '/packagetube/packageversionlist',
-            name: 'packageversionlist',
+            path: "/packagetube/packageversionlist",
+            name: "packageversionlist",
             hideInMenu: true,
-            component: './PkgTube/PackageVersionList',
+            component: "./PkgTube/PackageVersionList"
           },
-        ],
+          {
+            path: "/packagetube/version/step-form",
+            name: "stepform",
+            component: "./VersionStepForms",
+            hideChildrenInMenu: true,
+            routes: [
+              {
+                path: "/packagetube/version/step-form",
+                redirect: "/packagetube/version/step-form/info"
+              },
+              {
+                path: "/packagetube/version/step-form/info",
+                name: "info",
+                component: "./VersionStepForms/Step1"
+              },
+              {
+                path: "/packagetube/version/step-form/confirm",
+                name: "confirm",
+                component: "./VersionStepForms/Step2"
+              },
+              {
+                path: "/packagetube/version/step-form/result",
+                name: "result",
+                component: "./VersionStepForms/Step3"
+              }
+            ]
+          }
+        ]
       },
       {
-        component: '404',
-      },
-    ],
-  },
+        component: "404"
+      }
+    ]
+  }
 ];
