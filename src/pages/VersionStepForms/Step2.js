@@ -1,6 +1,7 @@
-import React from "react";
+
 import { connect } from "dva";
-import { Form, Input, Button, Alert, Icon, Table, Tag, InputNumber, Popconfirm } from "antd";
+import React, { PureComponent, Fragment } from 'react';
+import { Form, Input, Button, Alert, Icon, Table, Tag, InputNumber, Popconfirm, Divider } from "antd";
 import router from "umi/router";
 import moment from "moment";
 import { digitUppercase } from "@/utils/utils";
@@ -111,7 +112,7 @@ class EditableTable extends React.Component {
       {
         title: '权限',
         dataIndex: 'mod',
-        width: '8%',
+        width: '5%',
         editable: true,
       },
       {
@@ -162,12 +163,13 @@ class EditableTable extends React.Component {
                       <a
                         href="javascript:;"
                         onClick={() => this.save(form, record.key)}
-                        style={{ marginRight: 8 }}
+                        // style={{ marginRight: 8 }}
                       >
                         Save
                       </a>
                     )}
                   </EditableContext.Consumer>
+                  <Divider type="vertical" />
                   <Popconfirm
                     title="Sure to cancel?"
                     onConfirm={() => this.cancel(record.key)}
@@ -176,7 +178,19 @@ class EditableTable extends React.Component {
                   </Popconfirm>
                 </span>
               ) : (
-                <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>Edit</a>
+                <Fragment>
+                  <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>Edit</a>
+                  <Divider type="vertical" />
+                  <Popconfirm
+                    title="Sure to cancel?"
+                    onConfirm={() => this.cancel(record.key)}
+                  >
+                    <a>Delete</a>
+                  </Popconfirm>
+                  <Divider type="vertical" />
+                  <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>Download</a>
+                </Fragment>
+                
               )}
             </div>
           );
