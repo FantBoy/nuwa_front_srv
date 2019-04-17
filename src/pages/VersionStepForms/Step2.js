@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "dva";
-import { Form, Input, Button, Alert, Divider, Table, Tag, InputNumber, Popconfirm } from "antd";
+import { Form, Input, Button, Alert, Icon, Table, Tag, InputNumber, Popconfirm } from "antd";
 import router from "umi/router";
+import moment from "moment";
 import { digitUppercase } from "@/utils/utils";
 import styles from "./style.less";
 
@@ -15,12 +16,18 @@ const formItemLayout = {
 };
 
 const data = [];
+const fileType = ['D', 'F'];
+const beginDay = new Date().getTime();
 for (let i = 0; i < 30; i++) {
   data.push({
     key: i.toString(),
     name: `Edrward ${i}`,
-    age: 32,
-    address: `London Park no. ${i}`,
+    type: fileType[Math.floor(i/15)],
+    mod: 750,
+    md5: '691f23fe03309e3c65ed3105d4d5f257',
+    size: Math.floor(Math.random() * 20000000),
+    modifytime: moment(new Date(beginDay + 1000 * 60 * 60 * 24 * i)).format('YYYY-MM-DD HH:mm:ss'),
+
   });
 }
 
@@ -30,9 +37,9 @@ const EditableContext = React.createContext();
 class EditableCell extends React.Component {
   getInput = () => {
     if (this.props.inputType === 'number') {
-      return <InputNumber />;
+      return <InputNumber size="small"/>;
     }
-    return <Input />;
+    return <Input  size="small"/>;
   };
 
   render() {
@@ -76,25 +83,72 @@ class EditableTable extends React.Component {
     this.state = { data, editingKey: '' };
     this.columns = [
       {
-        title: 'name',
+        title: '文件名',
         dataIndex: 'name',
-        width: '25%',
+        width: '20%',
+        editable: false,
+        render: (text, record) => {
+          if(record.type == "D"){
+            return (
+              <div>
+                <Icon type="folder" />
+                <a style={{ marginLeft: 10 }}>{text}</a>
+              </div>
+              
+            );
+          }
+          else{
+            return (
+              <div>
+                <Icon type="file-text" />
+                <span style={{ marginLeft: 10 }}>{text}</span>
+              </div>
+              
+            );
+          }
+        }
+      },
+      {
+        title: '权限',
+        dataIndex: 'mod',
+        width: '8%',
         editable: true,
       },
       {
-        title: 'age',
-        dataIndex: 'age',
-        width: '15%',
-        editable: true,
+        title: '文件大小',
+        dataIndex: 'size',
+        width: '10%',
+        editable: false,
+        render: (text, record) => {
+          if(record.type == "D"){
+            return (<span></span>)
+          }
+          return (<span>{text}</span>)
+        }
       },
       {
-        title: 'address',
-        dataIndex: 'address',
-        width: '40%',
-        editable: true,
+        title: 'MD5',
+        dataIndex: 'md5',
+        width: '20%',
+        editable: false,
+        render: (text, record) => {
+          if(record.type == "D"){
+            return (<span></span>)
+          }
+          return (<span>{text}</span>)
+        }
       },
       {
-        title: 'operation',
+        title: '更新时间',
+        dataIndex: 'modifytime',
+        width: '18%',
+        editable: false,
+        // render(val) {
+        //   return moment(val).format("YYYY-MM-DD HH:mm:ss");
+        // }
+      },
+      {
+        title: '操作',
         dataIndex: 'operation',
         render: (text, record) => {
           const { editingKey } = this.state;
@@ -235,7 +289,7 @@ class Step2 extends React.PureComponent {
         <Alert
           closable
           showIcon
-          message="文件版本包，文件列表..."
+          message="当前路径："
           style={{ marginBottom: 24 }}
         />
         
