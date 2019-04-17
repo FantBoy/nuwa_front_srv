@@ -181,11 +181,11 @@ class EditableTable extends React.Component {
                 <Fragment>
                   <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>Edit</a>
                   <Divider type="vertical" />
-                  <Popconfirm
+                  <Popconfirm 
                     title="Sure to cancel?"
                     onConfirm={() => this.cancel(record.key)}
                   >
-                    <a>Delete</a>
+                    <a disabled={editingKey !== ''}>Delete</a>
                   </Popconfirm>
                   <Divider type="vertical" />
                   <a disabled={editingKey !== ''} onClick={() => this.edit(record.key)}>Download</a>
