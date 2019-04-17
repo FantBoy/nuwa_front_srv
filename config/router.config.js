@@ -73,27 +73,27 @@ export default [
             component: "./PkgTube/PackageVersionList"
           },
           {
-            path: "/packagetube/version/step-form",
+            path: "/packagetube/version/stepform",
             name: "stepform",
             component: "./VersionStepForms",
             hideChildrenInMenu: true,
             routes: [
               {
-                path: "/packagetube/version/step-form",
-                redirect: "/packagetube/version/step-form/info"
+                path: "/packagetube/version/stepform",
+                redirect: "/packagetube/version/stepform/info"
               },
               {
-                path: "/packagetube/version/step-form/info",
+                path: "/packagetube/version/stepform/info",
                 name: "info",
                 component: "./VersionStepForms/Step1"
               },
               {
-                path: "/packagetube/version/step-form/confirm",
+                path: "/packagetube/version/stepform/confirm",
                 name: "confirm",
                 component: "./VersionStepForms/Step2"
               },
               {
-                path: "/packagetube/version/step-form/result",
+                path: "/packagetube/version/stepform/result",
                 name: "result",
                 component: "./VersionStepForms/Step3"
               }
