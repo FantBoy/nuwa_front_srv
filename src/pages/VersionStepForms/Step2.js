@@ -78,6 +78,49 @@ class EditableCell extends React.Component {
   }
 }
 
+class FileModTable extends React.Component {
+  render() {
+    const columns = [
+      {
+        title: '变更文件',
+        dataIndex: 'filepath',
+        key: 'filepath',
+        render: (text, record) => {
+          return (
+            <Fragment>
+              <span style={{ marginRight: 10 }}>{record.type}</span>
+              <span>{text}</span>
+            </Fragment>
+          )
+        }
+      },
+    ];
+    const data = [
+      {
+        filepath: 'sdsa/dff/fefefg/egeg.html',
+        type: 'M'
+      },
+      {
+        filepath: 'sdsa/dff/fefefg',
+        type: 'A'
+      },
+      {
+        filepath: 'sdsa/dff/fefefg/egeiiig.html',
+        type: 'D'
+      },
+    ];
+    return (
+      <Table
+        dataSource={data}
+        columns={columns}
+        pagination={false}
+        size="small"
+        className={styles.stepFileMod}
+      ></Table>
+    )
+  }
+}
+
 class EditableTable extends React.Component {
   constructor(props) {
     super(props);
@@ -308,6 +351,7 @@ class Step2 extends React.PureComponent {
         />
         
         <EditableFormTable />
+        <FileModTable />
         <Button type="primary" onClick={onValidateForm} loading={submitting} className={styles.stepBtn}>
             提交
           </Button>
