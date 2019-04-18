@@ -347,17 +347,32 @@ class Step2 extends React.PureComponent {
           closable
           showIcon
           message="当前路径："
-          style={{ marginBottom: 24 }}
+          style={{ marginBottom: 10 }}
         />
+        <div className={styles.stepBtn}>
+          <Button type="primary" icon="upload" onClick={onValidateForm} loading={submitting} >
+              上传压缩包
+          </Button>
+          <Button type="primary" icon="upload" onClick={onValidateForm} loading={submitting} style={{ marginLeft: 8 }}>
+              上传文件
+          </Button>
+          <Button type="primary" icon="folder-add" onClick={onValidateForm} loading={submitting} style={{ marginLeft: 8 }}>
+              新建文件夹
+          </Button>
+          <Button onClick={onPrev} icon="left" style={{ marginLeft: 8 }} >
+              上一步
+          </Button>
+          <Button onClick={onPrev} icon="rollback" style={{ marginLeft: 8 }} >
+              撤销变更
+          </Button>
+          <Button onClick={onPrev} icon="right" style={{ marginLeft: 8 }} >
+              下一步
+          </Button>
+        </div>
         
         <EditableFormTable />
         <FileModTable />
-        <Button type="primary" onClick={onValidateForm} loading={submitting} className={styles.stepBtn}>
-            提交
-          </Button>
-          <Button onClick={onPrev} style={{ marginLeft: 8 }} className={styles.stepBtn}>
-            上一步
-          </Button>
+        
         
       </div>
       
