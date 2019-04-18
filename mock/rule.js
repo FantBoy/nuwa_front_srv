@@ -8,7 +8,7 @@ for (let i = 0; i < 46; i += 1) {
     disabled: i % 6 === 0,
     ip: `192.168.0.${i}`,
     name: `设备名称名称 ${i}`,
-    owner: '曲丽丽',
+    owner: '曲丽',
     ownergroup: `group_ ${i}`,
     desc: '这是一段描述',
     status: Math.floor(Math.random() * 10) % 3,
