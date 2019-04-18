@@ -349,7 +349,7 @@ class Step2 extends React.PureComponent {
           message="当前路径："
           style={{ marginBottom: 10 }}
         />
-        <div className={styles.stepBtn} >
+        <div className={styles.stepBtn}>
           <Button type="primary" icon="upload" onClick={onValidateForm} loading={submitting} >
               上传压缩包
           </Button>
