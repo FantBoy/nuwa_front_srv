@@ -216,7 +216,7 @@ class GroupList extends PureComponent {
                 <FormItem label="创建时间" {...this.formLayout}>
                   {getFieldDecorator('modify_time', {
                     rules: [{ required: true, message: '请选择创建时间' }],
-                    initialValue: current.modify_time ? moment(current.createdAt) : null,
+                    initialValue: current.modify_time ? moment(current.modify_time) : null,
                   })(
                     <DatePicker
                       showTime
@@ -321,7 +321,7 @@ class GroupList extends PureComponent {
                                 >
                                     <List.Item.Meta
                                         avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                                        title={<a href={item.href}>{item.name}</a>}
+                                        title={<a href={item.href}>{item.group_name}</a>}
                                         description={item.desc}
                                     />
                                     <ListContent data={item} />
