@@ -109,7 +109,7 @@ export async function queryFakeList(params) {
 
 export async function removeFakeList(params) {
   const { count = 5, ...restParams } = params;
-  return request(`/api/nodetube/querygrouplist?count=${count}`, {
+  return request(`/api/nodetube/editgroup`, {
     method: "POST",
     body: {
       ...restParams,
@@ -131,7 +131,7 @@ export async function addFakeList(params) {
 
 export async function updateFakeList(params) {
   const { count = 5, ...restParams } = params;
-  return request(`/api/nodetube/querygrouplist?count=${count}`, {
+  return request(`/api/nodetube/editgroup`, {
     method: "POST",
     body: {
       ...restParams,

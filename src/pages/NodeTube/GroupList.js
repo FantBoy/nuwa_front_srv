@@ -205,6 +205,25 @@ class GroupList extends PureComponent {
                 />
               );
             }
+            if (current) {
+              return (
+                <Form onSubmit={this.handleSubmit}>
+                  <FormItem label="分组名称" {...this.formLayout}>
+                    {getFieldDecorator('group_name', {
+                      rules: [{ required: true, message: '请输入分组名称' }],
+                      initialValue: current.group_name,
+                    })(<Input placeholder="请输入" />)}
+                  </FormItem>
+                  
+                  <FormItem {...this.formLayout} label="分组描述">
+                    {getFieldDecorator('desc', {
+                      rules: [{ message: '请输入至少五个字符的分组描述！', min: 5 }],
+                      initialValue: current.desc,
+                    })(<TextArea rows={4} placeholder="请输入至少五个字符" />)}
+                  </FormItem>
+                </Form>
+              );
+            }
             return (
               <Form onSubmit={this.handleSubmit}>
                 <FormItem label="分组名称" {...this.formLayout}>
