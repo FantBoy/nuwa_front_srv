@@ -155,15 +155,15 @@ class GroupList extends PureComponent {
             // total: 50,
         };
 
-        const ListContent = ({ data: { owner, createdAt, percent, status } }) => (
+        const ListContent = ({ data: { owner, modify_time} }) => (
             <div className={styles.listContent}>
-              <div className={styles.listContentItem}>
+              {/* <div className={styles.listContentItem}>
                 <span>Owner</span>
                 <p>{owner}</p>
-              </div>
+              </div> */}
               <div className={styles.listContentItem}>
                 <span>创建时间</span>
-                <p>{moment(createdAt).format('YYYY-MM-DD HH:mm')}</p>
+                <p>{moment(modify_time).format('YYYY-MM-DD HH:mm')}</p>
               </div>
               {/* <div className={styles.listContentItem}>
                 <Progress percent={percent} status={status} strokeWidth={6} style={{ width: 180 }} />
@@ -208,15 +208,15 @@ class GroupList extends PureComponent {
             return (
               <Form onSubmit={this.handleSubmit}>
                 <FormItem label="分组名称" {...this.formLayout}>
-                  {getFieldDecorator('title', {
+                  {getFieldDecorator('group_name', {
                     rules: [{ required: true, message: '请输入分组名称' }],
-                    initialValue: current.title,
+                    initialValue: current.group_name,
                   })(<Input placeholder="请输入" />)}
                 </FormItem>
                 <FormItem label="创建时间" {...this.formLayout}>
-                  {getFieldDecorator('createdAt', {
+                  {getFieldDecorator('modify_time', {
                     rules: [{ required: true, message: '请选择创建时间' }],
-                    initialValue: current.createdAt ? moment(current.createdAt) : null,
+                    initialValue: current.modify_time ? moment(current.createdAt) : null,
                   })(
                     <DatePicker
                       showTime
@@ -226,7 +226,7 @@ class GroupList extends PureComponent {
                     />
                   )}
                 </FormItem>
-                <FormItem label="分组负责人" {...this.formLayout}>
+                {/* <FormItem label="分组负责人" {...this.formLayout}>
                   {getFieldDecorator('owner', {
                     rules: [{ required: true, message: '请选择分组负责人' }],
                     initialValue: current.owner,
@@ -236,11 +236,11 @@ class GroupList extends PureComponent {
                       <SelectOption value="周毛毛">周毛毛</SelectOption>
                     </Select>
                   )}
-                </FormItem>
+                </FormItem> */}
                 <FormItem {...this.formLayout} label="分组描述">
-                  {getFieldDecorator('subDescription', {
+                  {getFieldDecorator('desc', {
                     rules: [{ message: '请输入至少五个字符的分组描述！', min: 5 }],
-                    initialValue: current.subDescription,
+                    initialValue: current.desc,
                   })(<TextArea rows={4} placeholder="请输入至少五个字符" />)}
                 </FormItem>
               </Form>
@@ -321,8 +321,8 @@ class GroupList extends PureComponent {
                                 >
                                     <List.Item.Meta
                                         avatar={<Avatar src={item.logo} shape="square" size="large" />}
-                                        title={<a href={item.href}>{item.title}</a>}
-                                        description={item.subDescription}
+                                        title={<a href={item.href}>{item.name}</a>}
+                                        description={item.desc}
                                     />
                                     <ListContent data={item} />
                                 </List.Item>

@@ -104,12 +104,12 @@ export async function queryAdvancedProfile() {
 }
 
 export async function queryFakeList(params) {
-  return request(`/api/fake_list?${stringify(params)}`);
+  return request(`/api/nodetube/querygrouplist?${stringify(params)}`);
 }
 
 export async function removeFakeList(params) {
   const { count = 5, ...restParams } = params;
-  return request(`/api/fake_list?count=${count}`, {
+  return request(`/api/nodetube/querygrouplist?count=${count}`, {
     method: "POST",
     body: {
       ...restParams,
@@ -120,7 +120,7 @@ export async function removeFakeList(params) {
 
 export async function addFakeList(params) {
   const { count = 5, ...restParams } = params;
-  return request(`/api/fake_list?count=${count}`, {
+  return request(`/api/nodetube/editgroup`, {
     method: "POST",
     body: {
       ...restParams,
@@ -131,7 +131,7 @@ export async function addFakeList(params) {
 
 export async function updateFakeList(params) {
   const { count = 5, ...restParams } = params;
-  return request(`/api/fake_list?count=${count}`, {
+  return request(`/api/nodetube/querygrouplist?count=${count}`, {
     method: "POST",
     body: {
       ...restParams,
