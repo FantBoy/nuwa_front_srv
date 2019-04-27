@@ -64,7 +64,7 @@ function fakeList(count) {
     list.push({
       id: `fake-list-${i}`,
       owner: user[i % 10],
-      title: titles[i % 8],
+      group_name: titles[i % 8],
       avatar: avatars[2],
       cover: parseInt(i / 4, 10) % 2 === 0 ? covers[i % 4] : covers[3 - (i % 4)],
       status: ['active', 'exception', 'normal'][i % 3],
@@ -73,7 +73,7 @@ function fakeList(count) {
       href: 'https://ant.design',
       updatedAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
       createdAt: new Date(new Date().getTime() - 1000 * 60 * 60 * 2 * i),
-      subDescription: desc[i % 5],
+      desc: desc[i % 5],
       description:
         '在中台产品的研发过程中，会出现不同的设计规范和实现方式，但其中往往存在很多类似的页面和组件，这些类似的组件会被抽离成一套标准规范。',
       activeUser: Math.ceil(Math.random() * 100000) + 100000,

@@ -151,7 +151,7 @@ class GroupList extends PureComponent {
         const paginationProps = {
             showSizeChanger: true,
             showQuickJumper: true,
-            pageSize: 3,
+            pageSize: 50,
             // total: 50,
         };
 
@@ -320,7 +320,7 @@ class GroupList extends PureComponent {
                                     ]}
                                 >
                                     <List.Item.Meta
-                                        avatar={<Avatar src={item.logo} shape="square" size="large" />}
+                                        avatar={<Avatar src="https://gw.alipayobjects.com/zos/rmsportal/dURIMkkrRFpPgTuzkwnB.png" shape="square" size="large" />}
                                         title={<a href={item.href}>{item.group_name}</a>}
                                         description={item.desc}
                                     />
