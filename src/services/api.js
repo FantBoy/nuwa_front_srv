@@ -14,7 +14,7 @@ export async function queryVersions(params) {
 }
 
 export async function queryRule(params) {
-  return request(`/api/rule?${stringify(params)}`);
+  return request(`/api/nodetube/querydevicelist?${stringify(params)}`);
 }
 
 export async function removeRule(params) {

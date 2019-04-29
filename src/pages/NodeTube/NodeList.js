@@ -268,26 +268,26 @@ class NodeList extends PureComponent {
     columns = [
         {
             title: '设备名称',
-            dataIndex: 'name',
+            dataIndex: 'device_name',
         },
         {
             title: '设备地址',
-            dataIndex: 'ip',
+            dataIndex: 'device_ip',
         },
         {
           title: '所属分组',
-          dataIndex: 'ownergroup',
-          filters: [
-            {
-              text: 'group_0',
-              value: 0,
-            },
-            {
-              text: 'group_1',
-              value: 1,
-            },
+          dataIndex: 'group',
+          // filters: [
+          //   {
+          //     text: 'group_0',
+          //     value: 0,
+          //   },
+          //   {
+          //     text: 'group_1',
+          //     value: 1,
+          //   },
             
-          ],
+          // ],
       },
         {
             title: '描述',
