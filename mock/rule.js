@@ -6,8 +6,8 @@ for (let i = 0; i < 46; i += 1) {
   tableListDataSource.push({
     key: i,
     disabled: i % 6 === 0,
-    ip: `192.168.0.${i}`,
-    name: `设备名称名称 ${i}`,
+    device_ip: `192.168.0.${i}`,
+    device_name: `设备名称名称 ${i}`,
     owner: '曲丽',
     ownergroup: `group_ ${i}`,
     desc: '这是一段描述',
@@ -120,6 +120,6 @@ function postRule(req, res, u, b) {
 }
 
 export default {
-  'GET /api/rule': getRule,
+  'GET /api/nodetube/querydevicelist': getRule,
   'POST /api/rule': postRule,
 };

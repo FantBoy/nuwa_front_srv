@@ -255,7 +255,7 @@ class UpdateForm extends PureComponent {
 /* eslint react/no-multi-comp:0 */
 @connect(({ rule, loading }) => ({
     rule,
-    loading: loading.models.rule,
+    loading: loading.models.data,
   }))
 @Form.create()
 class NodeList extends PureComponent {
