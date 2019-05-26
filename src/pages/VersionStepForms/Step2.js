@@ -343,12 +343,7 @@ class Step2 extends React.PureComponent {
 
     return (
       <div className={styles.stepFilesForm}>
-        <Alert
-          closable
-          showIcon
-          message="当前路径："
-          style={{ marginBottom: 10 }}
-        />
+        
         <div className={styles.stepBtn}>
           <Button type="primary" icon="upload" onClick={onValidateForm} loading={submitting} >
               上传压缩包
@@ -369,7 +364,12 @@ class Step2 extends React.PureComponent {
               下一步
           </Button>
         </div>
-        
+        <Alert
+          closable
+          showIcon
+          message="当前路径："
+          style={{ marginBottom: 10 }}
+        />
         <EditableFormTable />
         <FileModTable />
         
