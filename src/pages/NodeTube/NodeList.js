@@ -72,10 +72,10 @@ class UpdateForm extends PureComponent {
 
     this.state = {
       formVals: {
-        name: props.values.name,
-        ip: props.values.ip,
+        device_name: props.values.device_name,
+        device_ip: props.values.device_ip,
         desc: props.values.desc,
-        ownergroup: props.values.ownergroup,
+        group: props.values.group,
         key: props.values.key,
         status: props.values.status.toString(),
         owner: props.values.owner,
@@ -133,22 +133,23 @@ class UpdateForm extends PureComponent {
     const { form } = this.props;
     if (currentStep === 1) {
       return [
-        <FormItem key="ip" {...this.formLayout} label="设备地址">
-          {form.getFieldDecorator('ip', {
+        <FormItem key="device_ip" {...this.formLayout} label="设备地址">
+          {form.getFieldDecorator('device_ip', {
             rules: [{ required: true, message: '请输入设备地址！' }],
-            initialValue: formVals.ip,
+            initialValue: formVals.device_ip,
           })(<Input placeholder="请输入" />)}
         </FormItem>,
         
 
-        <FormItem key="ownergroup" {...this.formLayout} label="所属分组">
-          {form.getFieldDecorator('ownergroup', {
-              initialValue: formVals.ownergroup,
+        <FormItem key="group" {...this.formLayout} label="所属分组">
+          {form.getFieldDecorator('group', {
+              initialValue: formVals.group,
           })(
-            <Select style={{ width: '100%' }}>
-              <Option value="0">表一</Option>
-              <Option value="1">表二</Option>
-            </Select>
+            // <Select style={{ width: '100%' }}>
+            //   <Option value="0">表一</Option>
+            //   <Option value="1">表二</Option>
+            // </Select>
+            <Input placeholder="请输入" />
           )}
         </FormItem>,
         
@@ -167,10 +168,10 @@ class UpdateForm extends PureComponent {
     }
     
     return [
-      <FormItem key="name" {...this.formLayout} label="设备名称">
-        {form.getFieldDecorator('name', {
+      <FormItem key="device_name" {...this.formLayout} label="设备名称">
+        {form.getFieldDecorator('device_name', {
           rules: [{ required: true, message: '请输入设备名称！' }],
-          initialValue: formVals.name,
+          initialValue: formVals.device_name,
         })(<Input placeholder="请输入" />)}
       </FormItem>,
       <FormItem key="owner" {...this.formLayout} label="设备归属">
@@ -255,7 +256,7 @@ class UpdateForm extends PureComponent {
 /* eslint react/no-multi-comp:0 */
 @connect(({ rule, loading }) => ({
     rule,
-    loading: loading.models.data,
+    loading: loading.models.rule,
   }))
 @Form.create()
 class NodeList extends PureComponent {
